@@ -6,13 +6,13 @@ import java.io.Serializable;
 @Entity
 public class Employees implements Serializable {
 
-    private static final long serialVersionUID = 5818348705950427422L;
+    private static final long serialVersionUID = 5818348705950427422L; //in progress
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "employeeId")
     private Long employeeId;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "contactId", referencedColumnName = "contactId")
     private Contacts contactId;
 

@@ -44,6 +44,12 @@ public class ContactsController {
         ContactDto updatedContact = service.updateContact(contact);
         return new ResponseEntity<ResponseModel>(new ResponseModel("success",updatedContact), HttpStatus.OK);
     }
+    @DeleteMapping
+    public ResponseEntity<ResponseModel> deleteContact(@RequestParam Long id){
+        service.deleteContact(id);
+        String status = "Delete user with id: " + id.toString();
+        return new ResponseEntity<ResponseModel>(new ResponseModel("success",status), HttpStatus.OK);
+    }
 
 
 }

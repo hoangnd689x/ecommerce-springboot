@@ -15,20 +15,20 @@ public class ContactsServiceImpl implements ContactsService {
 
     @Override
     public ContactDto getContact(String email) {
-        if (repository.getOneContactByEmail(email) == null) {
+        if (repository.getContactByEmail(email) == null) {
             throw new RuntimeException("Contact does not existed");
         } else {
             ContactDto returnValue = new ContactDto();
-            BeanUtils.copyProperties(repository.getOneContactByEmail(email), returnValue);
+            BeanUtils.copyProperties(repository.getContactByEmail(email), returnValue);
             return returnValue;
         }
     }
 
     @Override
     public ContactDto createContact(ContactDto contact) {
-        if (repository.getOneContactByEmail(contact.getEmail()) != null)
+        if (repository.getContactByEmail(contact.getEmail()) != null)
             throw new RuntimeException("Contact already existed");
-        if (repository.getOneContactByPhone(contact.getPhone()) != null)
+        if (repository.getContactByPhone(contact.getPhone()) != null)
             throw new RuntimeException("Contact already existed");
         Contacts contactEntity = new Contacts();
         BeanUtils.copyProperties(contact, contactEntity);
@@ -42,7 +42,7 @@ public class ContactsServiceImpl implements ContactsService {
     public ContactDto updateContact(ContactDto contact) {
         ContactDto returnValue = new ContactDto();
         ContactDto updatedContact = new ContactDto();
-        Contacts existedContact = repository.getOneContactByContactId(contact.getContactId());
+        Contacts existedContact = repository.getContactByContactId(contact.getContactId());
         if (existedContact != null) {
             if (contact.getFirstName() != null) {
                 updatedContact.setFirstName(contact.getFirstName());
@@ -71,13 +71,13 @@ public class ContactsServiceImpl implements ContactsService {
                 updatedContact.setWard(existedContact.getWard());
             }
             if (contact.getEmail() != null) {
-                if (!repository.getOneContactByEmail(contact.getEmail()).getContactId().equals(contact.getContactId())) {
+                if (!repository.getContactByEmail(contact.getEmail()).getContactId().equals(contact.getContactId())) {
                     throw new RuntimeException("Email is already use by other contact");
 
                 } else if (existedContact.getEmail().equals(contact.getEmail())) {
                     throw new RuntimeException("Please input new email");
 
-                } else if (repository.getOneContactByEmail(contact.getEmail()).getContactId().equals(contact.getContactId()) && !existedContact.getEmail().equals(contact.getEmail())) {
+                } else if (repository.getContactByEmail(contact.getEmail()).getContactId().equals(contact.getContactId()) && !existedContact.getEmail().equals(contact.getEmail())) {
                     updatedContact.setEmail(contact.getEmail());
                 }
             }
@@ -85,11 +85,11 @@ public class ContactsServiceImpl implements ContactsService {
                 updatedContact.setEmail(existedContact.getEmail());
             }
             if (contact.getPhone() != null) {
-                if (repository.getOneContactByPhone(contact.getPhone()).getContactId() == contact.getContactId() && existedContact.getPhone() != contact.getPhone()) {
+                if (repository.getContactByPhone(contact.getPhone()).getContactId() == contact.getContactId() && existedContact.getPhone() != contact.getPhone()) {
                     updatedContact.setPhone(contact.getPhone());
                 } else if (existedContact.getPhone() == contact.getPhone()) {
                     throw new RuntimeException("Please input new phone");
-                } else if (repository.getOneContactByPhone(contact.getPhone()).getContactId() != contact.getContactId()) {
+                } else if (repository.getContactByPhone(contact.getPhone()).getContactId() != contact.getContactId()) {
                     throw new RuntimeException("Phone is already use by other contact");
                 }
             }else{
@@ -103,5 +103,12 @@ public class ContactsServiceImpl implements ContactsService {
         existedContact = repository.save(existedContact);
         BeanUtils.copyProperties(existedContact,returnValue);
         return returnValue;
+    }
+    @Override
+    public void deleteContact(Long id){
+        if(repository.getContactByContactId(id) == null){
+            throw new RuntimeException("Contact not found");
+        }
+        repository.deleteContactByContactId(id);
     }
 }
