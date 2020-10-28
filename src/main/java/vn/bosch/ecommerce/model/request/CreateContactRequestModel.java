@@ -1,44 +1,13 @@
-package vn.bosch.ecommerce.io.entity;
+package vn.bosch.ecommerce.model.request;
 
-import javax.persistence.*;
-import java.io.Serializable;
-
-@Entity
-public class Contacts implements Serializable {
-    private static final long serialVersionUID = -8199017043616298363L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "contactId", nullable = false, unique = true)
-    private Long contactId;
-
-    @Column(name = "firstName",length = 255, nullable = false)
+public class CreateContactRequestModel {
     private String firstName;
-
-    @Column(name = "lastname", length = 255, nullable = false)
     private String lastName;
-
-    @Column(name = "phone", length = 255, nullable = false, unique = true)
     private String phone;
-
-    @Column(name = "email", length = 255, nullable = false, unique = true)
     private String email;
-
-    @Column(name = "addressLine", length = 255)
     private String addressLine;
-
-    @Column(name = "ward", length = 255, nullable = false)
     private String ward;
-
-    @Column(name = "city", length = 255, nullable = false)
     private String city;
-
-    public Long getContactId() {
-        return contactId;
-    }
-
-    public void setContactId(Long contactId) {
-        this.contactId = contactId;
-    }
 
     public String getFirstName() {
         return firstName;

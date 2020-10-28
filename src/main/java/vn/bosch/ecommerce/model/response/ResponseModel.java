@@ -1,4 +1,4 @@
-package vn.bosch.ecommerce.model;
+package vn.bosch.ecommerce.model.response;
 
 public class ResponseModel {
     private String status;

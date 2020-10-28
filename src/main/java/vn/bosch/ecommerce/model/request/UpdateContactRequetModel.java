@@ -1,6 +1,6 @@
 package vn.bosch.ecommerce.model.request;
 
-public class ContactRequestBody {
+public class UpdateContactRequetModel {
     private String firstName;
     private String lastName;
     private String phone;

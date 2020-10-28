@@ -1,4 +1,4 @@
-package vn.bosch.ecommerce.io.entity;
+package vn.bosch.ecommerce.io.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -8,7 +8,7 @@ public class Employees implements Serializable {
 
     private static final long serialVersionUID = 5818348705950427422L;
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "employeeId")
     private Long employeeId;
 

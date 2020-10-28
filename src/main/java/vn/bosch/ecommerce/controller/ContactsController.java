@@ -6,8 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vn.bosch.ecommerce.dto.ContactDto;
-import vn.bosch.ecommerce.model.ResponseModel;
-import vn.bosch.ecommerce.model.request.ContactRequestBody;
+import vn.bosch.ecommerce.model.request.UpdateContactRequetModel;
+import vn.bosch.ecommerce.model.response.ResponseModel;
+import vn.bosch.ecommerce.model.request.CreateContactRequestModel;
 import vn.bosch.ecommerce.service.ContactsService;
 
 @RestController
@@ -28,10 +29,21 @@ public class ContactsController {
         }
     }
     @PostMapping
-    public ResponseEntity<ResponseModel> createContact(@RequestBody ContactRequestBody request){
+    public ResponseEntity<ResponseModel> createContact(@RequestBody CreateContactRequestModel request){
         ContactDto contact = new ContactDto();
         BeanUtils.copyProperties(request,contact);
         ContactDto createdContact = service.createContact(contact);
         return new ResponseEntity<ResponseModel>(new ResponseModel("success",createdContact), HttpStatus.OK);
     }
+
+    @PutMapping
+    public ResponseEntity<ResponseModel> updateContact(@RequestParam Long id, @RequestBody UpdateContactRequetModel contactData){
+        ContactDto contact = new ContactDto();
+        BeanUtils.copyProperties(contactData,contact);
+        contact.setContactId(id);
+        ContactDto updatedContact = service.updateContact(contact);
+        return new ResponseEntity<ResponseModel>(new ResponseModel("success",updatedContact), HttpStatus.OK);
+    }
+
+
 }

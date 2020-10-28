@@ -1,6 +1,6 @@
 package vn.bosch.ecommerce.dto;
 
-import vn.bosch.ecommerce.io.entity.Contacts;
+import vn.bosch.ecommerce.io.entities.Contacts;
 
 public class EmployeeDto {
     private Long employeeId;
