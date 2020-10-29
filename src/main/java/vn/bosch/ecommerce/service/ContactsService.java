@@ -7,6 +7,4 @@ public interface ContactsService {
     public ContactDto createContact(ContactDto contact);
     public ContactDto updateContact(ContactDto contact);
     public void deleteContact(Long id);
-
-
 }

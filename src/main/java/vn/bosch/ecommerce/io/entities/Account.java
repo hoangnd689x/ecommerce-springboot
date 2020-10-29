@@ -1,4 +1,4 @@
-package vn.bosch.ecommerce.entity;
+package vn.bosch.ecommerce.io.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
