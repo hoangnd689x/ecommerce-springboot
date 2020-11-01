@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import vn.bosch.ecommerce.io.entities.Account;
-import vn.bosch.ecommerce.io.repositories.AccountRepository;
+import vn.bosch.ecommerce.model.Account;
+import vn.bosch.ecommerce.repository.AccountRepository;
 import vn.bosch.ecommerce.service.AccountService;
 
 @Service
@@ -17,23 +17,31 @@ public class AccountServiceImpl implements AccountService {
 	private AccountRepository accountRepository; 
 	
 	@Override
-	public List<Account> getAllAccounts() {
-		return (List<Account>) accountRepository.findAll();
+	public List<Account> getAll() {
+		return accountRepository.findAll();
 	}
 
 	@Override
-	public void saveAccount(Account account) {
+	public void save(Account account) {
 		accountRepository.save(account);
 	}
 
 	@Override
-	public void deleteAccount(Long id) {
+	public void delete(Long id) {
 		accountRepository.deleteById(id);  
 	}
 
 	@Override
-	public Optional<Account> findAccountById(Long id) {
+	public Optional<Account> findById(Long id) {
 		return accountRepository.findById(id);  
 	}
-	  
+
+	@Override
+	public void update(Long id, Account account) {
+		Optional<Account> existingObj = accountRepository.findById(id);
+		if(existingObj.isPresent()) {
+			account.setAccountId(id);
+			accountRepository.save(account);
+		}
+	}
 }

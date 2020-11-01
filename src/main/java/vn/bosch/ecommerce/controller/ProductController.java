@@ -12,40 +12,40 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import vn.bosch.ecommerce.model.Account;
-import vn.bosch.ecommerce.service.AccountService;
+import vn.bosch.ecommerce.model.Product;
+import vn.bosch.ecommerce.service.ProductService;
 
 @RestController
-@RequestMapping(value = "/api/account")
-public class AccountsController {
-	   @Autowired
-	   AccountService accountService;
+@RequestMapping("/api/product")
+public class ProductController {
+	@Autowired
+	   ProductService productService;
 		
 	   @GetMapping
 	   public ResponseEntity<Object> getAll() {
-	      return new ResponseEntity<>(accountService.getAll(), HttpStatus.OK);
+	      return new ResponseEntity<>(productService.getAll(), HttpStatus.OK);
 	   }
 	   
 	   @PostMapping
-	   public ResponseEntity<Object> save(@RequestBody Account account) {
-		  accountService.save(account);
-	      return new ResponseEntity<>("Account is saved successfully", HttpStatus.CREATED);
+	   public ResponseEntity<Object> save(@RequestBody Product product) {
+		  productService.save(product);
+	      return new ResponseEntity<>("Product is saved successfully", HttpStatus.CREATED);
 	   }
 
 	   @PutMapping
-	   public ResponseEntity<Object> update(@PathVariable("id") Long id, @RequestBody Account account) {
-		  accountService.update(id, account);
-	      return new ResponseEntity<>("Account is updated successfully", HttpStatus.CREATED);
+	   public ResponseEntity<Object> update(@PathVariable("id") Long id, @RequestBody Product product) {
+		  productService.update(id, product);
+	      return new ResponseEntity<>("Product is updated successfully", HttpStatus.CREATED);
 	   }
 	   
 	   @DeleteMapping("/{id}")
 	   public ResponseEntity<Object> delete(@PathVariable("id") Long id) { 
-		   accountService.delete(id);
-	      return new ResponseEntity<>("Account is deleted successsfully", HttpStatus.OK);
+		   productService.delete(id);
+	      return new ResponseEntity<>("Product is deleted successsfully", HttpStatus.OK);
 	   }
 	   
 	   @GetMapping("/{id}")
 	   public ResponseEntity<Object> get(@PathVariable("id") Long id) {
-	      return new ResponseEntity<>(accountService.findById(id), HttpStatus.OK);
+	      return new ResponseEntity<>(productService.findById(id), HttpStatus.OK);
 	   }
 }

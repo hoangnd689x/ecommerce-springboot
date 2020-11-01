@@ -12,40 +12,40 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import vn.bosch.ecommerce.model.Account;
-import vn.bosch.ecommerce.service.AccountService;
+import vn.bosch.ecommerce.model.Invoice;
+import vn.bosch.ecommerce.service.InvoiceService;
 
 @RestController
-@RequestMapping(value = "/api/account")
-public class AccountsController {
-	   @Autowired
-	   AccountService accountService;
+@RequestMapping("/api/invoice")
+public class InvoiceController {
+	@Autowired
+	   InvoiceService invoiceService;
 		
 	   @GetMapping
 	   public ResponseEntity<Object> getAll() {
-	      return new ResponseEntity<>(accountService.getAll(), HttpStatus.OK);
+	      return new ResponseEntity<>(invoiceService.getAll(), HttpStatus.OK);
 	   }
 	   
 	   @PostMapping
-	   public ResponseEntity<Object> save(@RequestBody Account account) {
-		  accountService.save(account);
-	      return new ResponseEntity<>("Account is saved successfully", HttpStatus.CREATED);
+	   public ResponseEntity<Object> save(@RequestBody Invoice invoice) {
+		  invoiceService.save(invoice);
+	      return new ResponseEntity<>("Invoice is saved successfully", HttpStatus.CREATED);
 	   }
 
 	   @PutMapping
-	   public ResponseEntity<Object> update(@PathVariable("id") Long id, @RequestBody Account account) {
-		  accountService.update(id, account);
-	      return new ResponseEntity<>("Account is updated successfully", HttpStatus.CREATED);
+	   public ResponseEntity<Object> update(@PathVariable("id") Long id, @RequestBody Invoice invoice) {
+		  invoiceService.update(id, invoice);
+	      return new ResponseEntity<>("Invoice is updated successfully", HttpStatus.CREATED);
 	   }
 	   
 	   @DeleteMapping("/{id}")
 	   public ResponseEntity<Object> delete(@PathVariable("id") Long id) { 
-		   accountService.delete(id);
-	      return new ResponseEntity<>("Account is deleted successsfully", HttpStatus.OK);
+		   invoiceService.delete(id);
+	      return new ResponseEntity<>("Invoice is deleted successsfully", HttpStatus.OK);
 	   }
 	   
 	   @GetMapping("/{id}")
 	   public ResponseEntity<Object> get(@PathVariable("id") Long id) {
-	      return new ResponseEntity<>(accountService.findById(id), HttpStatus.OK);
+	      return new ResponseEntity<>(invoiceService.findById(id), HttpStatus.OK);
 	   }
 }

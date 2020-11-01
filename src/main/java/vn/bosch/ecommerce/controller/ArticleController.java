@@ -12,40 +12,40 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import vn.bosch.ecommerce.model.Account;
-import vn.bosch.ecommerce.service.AccountService;
+import vn.bosch.ecommerce.model.Article;
+import vn.bosch.ecommerce.service.ArticleService;
 
 @RestController
-@RequestMapping(value = "/api/account")
-public class AccountsController {
-	   @Autowired
-	   AccountService accountService;
+@RequestMapping("/api/article")
+public class ArticleController {
+	@Autowired
+	   ArticleService articleService;
 		
 	   @GetMapping
 	   public ResponseEntity<Object> getAll() {
-	      return new ResponseEntity<>(accountService.getAll(), HttpStatus.OK);
+	      return new ResponseEntity<>(articleService.getAll(), HttpStatus.OK);
 	   }
 	   
 	   @PostMapping
-	   public ResponseEntity<Object> save(@RequestBody Account account) {
-		  accountService.save(account);
-	      return new ResponseEntity<>("Account is saved successfully", HttpStatus.CREATED);
+	   public ResponseEntity<Object> save(@RequestBody Article article) {
+		  articleService.save(article);
+	      return new ResponseEntity<>("Article is saved successfully", HttpStatus.CREATED);
 	   }
 
 	   @PutMapping
-	   public ResponseEntity<Object> update(@PathVariable("id") Long id, @RequestBody Account account) {
-		  accountService.update(id, account);
-	      return new ResponseEntity<>("Account is updated successfully", HttpStatus.CREATED);
+	   public ResponseEntity<Object> update(@PathVariable("id") Long id, @RequestBody Article article) {
+		  articleService.update(id, article);
+	      return new ResponseEntity<>("Article is updated successfully", HttpStatus.CREATED);
 	   }
 	   
 	   @DeleteMapping("/{id}")
 	   public ResponseEntity<Object> delete(@PathVariable("id") Long id) { 
-		   accountService.delete(id);
-	      return new ResponseEntity<>("Account is deleted successsfully", HttpStatus.OK);
+		   articleService.delete(id);
+	      return new ResponseEntity<>("Article is deleted successsfully", HttpStatus.OK);
 	   }
 	   
 	   @GetMapping("/{id}")
 	   public ResponseEntity<Object> get(@PathVariable("id") Long id) {
-	      return new ResponseEntity<>(accountService.findById(id), HttpStatus.OK);
+	      return new ResponseEntity<>(articleService.findById(id), HttpStatus.OK);
 	   }
 }

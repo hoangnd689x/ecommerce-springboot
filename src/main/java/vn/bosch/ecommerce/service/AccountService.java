@@ -3,15 +3,16 @@ package vn.bosch.ecommerce.service;
 import java.util.List;
 import java.util.Optional;
 
-import vn.bosch.ecommerce.io.entities.Account;
-
+import vn.bosch.ecommerce.model.Account;
 
 public interface AccountService {
-	List<Account> getAllAccounts();
+	List<Account> getAll();
 
-	void saveAccount(Account account);
-
-	void deleteAccount(Long id);
+	void save(Account account);
 	
-	Optional<Account> findAccountById(Long id);
+	void update(Long id, Account account);
+
+	void delete(Long id);
+	
+	Optional<Account> findById(Long id);
 }
