@@ -6,38 +6,41 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vn.bosch.ecommerce.dto.ContactDto;
-import vn.bosch.ecommerce.model.request.UpdateContactRequetModel;
 import vn.bosch.ecommerce.model.response.ResponseModel;
-import vn.bosch.ecommerce.model.request.CreateContactRequestModel;
+import vn.bosch.ecommerce.model.request.RequestContactModel;
 import vn.bosch.ecommerce.service.ContactsService;
 
 @RestController
-@RequestMapping("contacts")
+@RequestMapping("api/contacts")
 public class ContactsController {
     @Autowired
     ContactsService service;
 
     @GetMapping
-    public ResponseEntity<ResponseModel> getContact(@RequestHeader("email") String email){
-        if(service.getContact(email) != null){
-            ResponseModel response = new ResponseModel("success",service.getContact(email));
-            return new ResponseEntity<ResponseModel>(response,HttpStatus.OK);
-        }
-        else{
-            ResponseModel response = new ResponseModel("fail",service.getContact(email));
-            return new ResponseEntity<ResponseModel>(response,HttpStatus.NOT_FOUND);
+    public ResponseEntity<ResponseModel> getContact(@RequestParam("id") Long id, RequestContactModel request){
+        if (request == null){
+            ResponseModel response = new ResponseModel("success", service.getContact(request.getEmail()));
+            return new ResponseEntity<ResponseModel>(response, HttpStatus.OK);
+        } else {
+            if (service.getContact(request.getEmail()) != null) {
+                ResponseModel response = new ResponseModel("success", service.getContact(request.getEmail()));
+                return new ResponseEntity<ResponseModel>(response, HttpStatus.OK);
+            } else {
+                ResponseModel response = new ResponseModel("fail", service.getContact(request.getEmail()));
+                return new ResponseEntity<ResponseModel>(response, HttpStatus.NOT_FOUND);
+            }
         }
     }
     @PostMapping
-    public ResponseEntity<ResponseModel> createContact(@RequestBody CreateContactRequestModel request){
+    public ResponseEntity<ResponseModel> createContact(@RequestBody RequestContactModel request){
         ContactDto contact = new ContactDto();
         BeanUtils.copyProperties(request,contact);
         ContactDto createdContact = service.createContact(contact);
         return new ResponseEntity<ResponseModel>(new ResponseModel("success",createdContact), HttpStatus.OK);
     }
 
-    @PutMapping
-    public ResponseEntity<ResponseModel> updateContact(@RequestParam Long id, @RequestBody UpdateContactRequetModel contactData){
+    @PutMapping()
+    public ResponseEntity<ResponseModel> updateContact(@RequestParam Long id, @RequestBody RequestContactModel contactData){
         ContactDto contact = new ContactDto();
         BeanUtils.copyProperties(contactData,contact);
         contact.setContactId(id);

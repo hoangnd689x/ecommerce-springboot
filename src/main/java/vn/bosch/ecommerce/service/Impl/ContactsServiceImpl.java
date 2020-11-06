@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import vn.bosch.ecommerce.dto.ContactDto;
 import vn.bosch.ecommerce.io.entities.Contacts;
 import vn.bosch.ecommerce.io.repositories.ContactsRepository;
+import vn.bosch.ecommerce.model.request.RequestContactModel;
 import vn.bosch.ecommerce.service.ContactsService;
 
 @Service
@@ -14,14 +15,23 @@ public class ContactsServiceImpl implements ContactsService {
     ContactsRepository repository;
 
     @Override
-    public ContactDto getContact(String email) {
-        if (repository.getContactByEmail(email) == null) {
-            throw new RuntimeException("Contact does not existed");
-        } else {
-            ContactDto returnValue = new ContactDto();
-            BeanUtils.copyProperties(repository.getContactByEmail(email), returnValue);
-            return returnValue;
-        }
+    public ContactDto getContact(Long id, RequestContactModel request) {
+       if(repository.getContactByContactId(id) == null){
+           throw new RuntimeException("Contact do not exist");
+       }
+       if(request == null){
+           ContactDto returnValue  = new ContactDto();
+           BeanUtils.copyProperties(repository.getContactByContactId(id),returnValue);
+           return returnValue;
+       }else{
+           if(request.getEmail() != null){
+               ContactDto returnValue  = new ContactDto();
+               BeanUtils.copyProperties(repository.getContactByEmail(request.getEmail()),returnValue);
+               return returnValue;
+           } else {
+               return null;
+           }
+       }
     }
 
     @Override
