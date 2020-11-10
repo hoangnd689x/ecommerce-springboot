@@ -27,12 +27,12 @@ public class Category implements Serializable {
 
 	@Column(name = "isDeleted")
 	private boolean isDeleted;
-	
-	@Column(name = "createdDate")
-	private Date createdDate;
-	
+
 	@Column(name = "modifiedDate")
 	private Date modifiedDate;
+
+	@Column(name = "createdDate")
+	private Date createdDate;
 
 	@ManyToOne
     @JoinColumn(name = "createdBy", nullable = false)

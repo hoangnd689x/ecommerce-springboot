@@ -14,21 +14,25 @@ public class Order implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
     private Long orderId;
 
-    @Column(name = "invoiceId")
-    private String invoiceId;
-    
-    @Column(name = "productId")
-    private String productId;
+	@ManyToOne
+	@JoinColumn(name = "paymentId")
+	private Payment paymentId;
+
+	@Column(name = "paymentDate")
+	private Date paymentDate;
     
     @Column(name = "orderedQuantity")
     private Integer orderedQuantity;
 
+    @Column(name = "paymentMethod")
+	private String paymentMethod;
+
 	@Column(name = "createdDate")
 	private Date createdDate;
 
-	@ManyToOne
-	@JoinColumn(name = "paymentId")
-	private Payment paymentId;
+	@Column(name = "status")
+	private String status;
+
 	public Date getCreatedDate() {
 		return createdDate;
 	}
@@ -45,22 +49,6 @@ public class Order implements Serializable {
 		this.orderId = orderId;
 	}
 
-	public String getInvoiceId() {
-		return invoiceId;
-	}
-
-	public void setInvoiceId(String invoiceId) {
-		this.invoiceId = invoiceId;
-	}
-
-	public String getProductId() {
-		return productId;
-	}
-
-	public void setProductId(String productId) {
-		this.productId = productId;
-	}
-
 	public Integer getOrderedQuantity() {
 		return orderedQuantity;
 	}
@@ -69,4 +57,35 @@ public class Order implements Serializable {
 		this.orderedQuantity = orderedQuantity;
 	}
 
+	public Payment getPaymentId() {
+		return paymentId;
+	}
+
+	public void setPaymentId(Payment paymentId) {
+		this.paymentId = paymentId;
+	}
+
+	public Date getPaymentDate() {
+		return paymentDate;
+	}
+
+	public void setPaymentDate(Date paymentDate) {
+		this.paymentDate = paymentDate;
+	}
+
+	public String getPaymentMethod() {
+		return paymentMethod;
+	}
+
+	public void setPaymentMethod(String paymentMethod) {
+		this.paymentMethod = paymentMethod;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 }

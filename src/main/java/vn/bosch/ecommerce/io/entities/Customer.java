@@ -15,14 +15,18 @@ public class Customer implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
     private Long customerId;
 
-    @Column(name = "gender")
-    private String gender;
+    @ManyToOne
+    @JoinColumn(name = "accountId")
+    private Account accountId;
+
+    @Column (name = "lastName")
+    private String lastName;
 
     @Column(name = "firstName")
     private String firstName;
 
-    @Column (name = "lastName")
-    private String lastName;
+    @Column(name = "gender")
+    private String gender;
 
     @Column (name = "phone")
     private String phone;
@@ -48,9 +52,7 @@ public class Customer implements Serializable {
     @Column(name = "modifiedDate")
     private Date modifiedDate;
 
-    @ManyToOne
-    @JoinColumn(name = "accountId")
-    private Account accountId;
+
 
     @OneToMany(mappedBy = "customerId")
     private List<ShoppingCart> shoppingCartId;

@@ -18,6 +18,9 @@ public class Account implements Serializable {
 	@Column(name = "email")
 	private String email;
 
+	@Column(name = "userName")
+	private String userName;
+
 	@Column(name = "password")
 	private String password;
 
@@ -54,6 +57,9 @@ public class Account implements Serializable {
 
 	@OneToMany(mappedBy ="accountId")
 	private List<Customer> customer;
+
+	@OneToMany(mappedBy = "email")
+	private List<Comment> comments;
 
 	public Date getCreatedDate() {
 		return this.createdDate;
@@ -111,4 +117,13 @@ public class Account implements Serializable {
 	public void setRoleId(Role roleId) {
 		this.roleId = roleId;
 	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
 }

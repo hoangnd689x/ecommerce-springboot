@@ -2,15 +2,9 @@ package vn.bosch.ecommerce.io.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "articles")
@@ -24,7 +18,7 @@ public class Article implements Serializable {
     @Column(name = "articleTitle")
     private String articleTitle;
 
-    @Column(name = "content")
+    @Column(name = "content", length = 10000)
     private String content;
 
 	@Column(name = "isDeleted")
@@ -44,6 +38,8 @@ public class Article implements Serializable {
     @JoinColumn(name = "modifiedBy")
 	private Account modifiedBy;
 
+    @OneToMany(mappedBy = "articleId")
+	private List<Comment> comments;
 
 
 	public boolean isDeleted() {

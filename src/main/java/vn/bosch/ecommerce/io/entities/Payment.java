@@ -15,6 +15,10 @@ public class Payment implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
     private Long paymentId;
 
+	@ManyToOne
+	@JoinColumn(name = "customerId")
+	private Customer customerId;
+
     @Column(name = "paymentDate")
     private Date paymentDate;
 
@@ -22,7 +26,7 @@ public class Payment implements Serializable {
     private Double amount;
 
 	@Column(name = "paymentMethods")
-	private Integer paymentMethods;
+	private String paymentMethods;
 	
 	@Column(name = "createdDate")
 	private Date createdDate;
@@ -30,9 +34,6 @@ public class Payment implements Serializable {
 	@OneToMany(mappedBy = "paymentId")
 	private List<Order> orderId;
 
-	@ManyToOne
-	@JoinColumn(name = "customerId")
-	private Customer customerId;
 
 	public Customer getCustomerId() {
 		return customerId;
@@ -66,11 +67,11 @@ public class Payment implements Serializable {
 		this.paymentDate = paymentDate;
 	}
 
-	public Integer getPaymentMethods() {
+	public String getPaymentMethods() {
 		return paymentMethods;
 	}
 
-	public void setPaymentMethods(Integer paymentMethods) {
+	public void setPaymentMethods(String paymentMethods) {
 		this.paymentMethods = paymentMethods;
 	}
 

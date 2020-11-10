@@ -34,8 +34,12 @@ public class Product implements Serializable {
     @Column(name = "productImage")
     private String productImage;
 
+
     @Column(name = "discount")
     private Double discount;
+
+	@Column(name = "viewCount")
+	private String viewCount;
 
 	@Column(name = "isDeleted")
 	private boolean isDeleted;
@@ -60,6 +64,8 @@ public class Product implements Serializable {
     @OneToMany(mappedBy = "orderId")
 	private List<OrderDetail> orderDetail;
 
+	@OneToMany(mappedBy = "productId")
+	private List<Comment> comments;
 
 	public Category getCategoryId() {
 		return categoryId;
@@ -163,5 +169,13 @@ public class Product implements Serializable {
 
 	public void setModifiedBy(Account modifiedBy) {
 		this.modifiedBy = modifiedBy;
+	}
+
+	public String getViewCount() {
+		return viewCount;
+	}
+
+	public void setViewCount(String viewCount) {
+		this.viewCount = viewCount;
 	}
 }

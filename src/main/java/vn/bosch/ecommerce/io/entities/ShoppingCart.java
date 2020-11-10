@@ -31,7 +31,8 @@ public class ShoppingCart implements Serializable {
 	@Column(name = "modifiedDate")
 	private Date modifiedDate;
 
-
+	@Column(name = "status")
+	private String status;
 
 
 	public Date getCreatedDate() {
@@ -73,5 +74,13 @@ public class ShoppingCart implements Serializable {
 
 	public void setProductId(Product productId) {
 		this.productId = productId;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 }
