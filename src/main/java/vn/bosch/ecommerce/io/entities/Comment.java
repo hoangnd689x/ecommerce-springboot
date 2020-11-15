@@ -22,10 +22,6 @@ public class Comment implements Serializable {
     @JoinColumn(name ="articleId")
     private Article articleId;
 
-    @ManyToOne
-    @JoinColumn(name ="productId")
-    private Product productId;
-
     @Column(name = "commentContent")
     private String commentContent;
 
@@ -58,14 +54,6 @@ public class Comment implements Serializable {
 
     public void setArticleId(Article articleId) {
         this.articleId = articleId;
-    }
-
-    public Product getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Product productId) {
-        this.productId = productId;
     }
 
     public String getCommentContent() {

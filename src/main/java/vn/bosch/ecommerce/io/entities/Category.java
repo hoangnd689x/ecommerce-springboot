@@ -42,7 +42,7 @@ public class Category implements Serializable {
     @JoinColumn(name = "modifiedBy", nullable = false)
 	private Account modifiedBy;
 
-	@OneToMany(mappedBy = "categoryId")
+	@OneToMany(mappedBy = "category")
 	private List<Product> product;
 
 	public Account getCreatedBy() {

@@ -104,4 +104,12 @@ public class Article implements Serializable {
 	public void setModifiedBy(Account modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
+
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
 }
