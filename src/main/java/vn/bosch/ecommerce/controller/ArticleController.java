@@ -48,4 +48,8 @@ public class ArticleController {
 	   public ResponseEntity<Object> get(@PathVariable("id") Long id) {
 	      return new ResponseEntity<>(articleService.findById(id), HttpStatus.OK);
 	   }
+	   @GetMapping("/{id}/comments")
+	   public ResponseEntity<Object> getArticleComments(@PathVariable("id") Long id) {
+		   return new ResponseEntity<>(articleService.getArticleComments(id), HttpStatus.OK);
+	   }
 }

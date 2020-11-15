@@ -18,7 +18,7 @@ public class AccountServiceImpl implements AccountService {
 	
 	@Override
 	public List<Account> getAll() {
-		return accountRepository.findAll();
+		return (List<Account>) accountRepository.findAll();
 	}
 
 	@Override
