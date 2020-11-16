@@ -7,5 +7,6 @@ import vn.bosch.ecommerce.io.entities.Account;
 
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Long>{
-
+	Account findByUsername(String username);
+	Account findByEmail(String email);
 }

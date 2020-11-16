@@ -19,43 +19,43 @@ public class Account implements Serializable {
 	private String email;
 
 	@Column(name = "userName")
-	private String userName;
+	private String username;
 
 	@Column(name = "password")
 	private String password;
 
 	@ManyToOne
 	@JoinColumn(name = "roleId")
-	private Role roleId;
-	
+	private Role role;
+
 	@Column(name = "isDeleted")
 	private boolean isDeleted;
-	
+
 	@Column(name = "createdDate")
 	private Date createdDate;
-	
+
 	@Column(name = "modifiedDate")
 	private Date modifiedDate;
 
-	@OneToMany(mappedBy ="createdBy")
+	@OneToMany(mappedBy = "createdBy")
 	private List<Article> createArticleBy;
 
-	@OneToMany(mappedBy ="modifiedBy")
+	@OneToMany(mappedBy = "modifiedBy")
 	private List<Article> modifiedArticleBy;
 
-	@OneToMany(mappedBy ="createdBy")
+	@OneToMany(mappedBy = "createdBy")
 	private List<Category> createCategoryBy;
 
-	@OneToMany(mappedBy ="modifiedBy")
+	@OneToMany(mappedBy = "modifiedBy")
 	private List<Category> modifiedCategoryBy;
 
-	@OneToMany(mappedBy ="createdBy")
+	@OneToMany(mappedBy = "createdBy")
 	private List<Product> createProductBy;
 
-	@OneToMany(mappedBy ="modifiedBy")
+	@OneToMany(mappedBy = "modifiedBy")
 	private List<Category> modifiedProductBy;
 
-	@OneToMany(mappedBy ="accountId")
+	@OneToMany(mappedBy = "accountId")
 	private List<Customer> customer;
 
 	@OneToMany(mappedBy = "email")
@@ -109,21 +109,26 @@ public class Account implements Serializable {
 		this.password = password;
 	}
 
-
-	public Role getRoleId() {
-		return roleId;
+	public Role getRole() {
+		return role;
 	}
 
-	public void setRoleId(Role roleId) {
-		this.roleId = roleId;
+	public void setRole(Role role) {
+		this.role = role;
 	}
 
 	public String getUserName() {
-		return userName;
+		return username;
 	}
 
 	public void setUserName(String userName) {
-		this.userName = userName;
+		this.username = userName;
+	}
+
+	@Override
+	public String toString() {
+		return "User{" + "id=" + accountId + ", email='" + email + '\'' + ", password='" + "*********" + '\''
+				+ ", role=" + role + '}';
 	}
 
 }

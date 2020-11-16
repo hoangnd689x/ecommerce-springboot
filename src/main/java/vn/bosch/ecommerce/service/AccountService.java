@@ -3,6 +3,9 @@ package vn.bosch.ecommerce.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
 import vn.bosch.ecommerce.io.entities.Account;
 
 public interface AccountService {
@@ -15,4 +18,10 @@ public interface AccountService {
 	void delete(Long id);
 	
 	Optional<Account> findById(Long id);
+	
+	Account findByUsername(String username);
+
+	Account findByEmail(String email);
+
+
 }
