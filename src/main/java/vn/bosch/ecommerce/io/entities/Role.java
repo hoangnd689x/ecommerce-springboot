@@ -1,10 +1,14 @@
 package vn.bosch.ecommerce.io.entities;
 
 import javax.persistence.*;
+
+import org.springframework.stereotype.Component;
+
 import java.io.Serializable;
 import java.util.List;
 
 @Entity
+@Component
 @Table(name = "roles")
 public class Role implements Serializable {
     private static final long serialVersionUID = 7237586574813490104L;
@@ -14,7 +18,7 @@ public class Role implements Serializable {
     private Long roleId;
 
     @Column(name = "roleName")
-    private String roleName;
+    private String name;
 
     @OneToMany(mappedBy = "role")
     private List<Account> accounts;
@@ -27,11 +31,13 @@ public class Role implements Serializable {
 		this.roleId = roleId;
 	}
 
-	public String getRoleName() {
-		return roleName;
+	public String getName() {
+		return name;
 	}
 
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
+	public void setName(String name) {
+		this.name = name;
 	}
+
+
 }

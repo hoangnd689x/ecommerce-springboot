@@ -1,26 +1,86 @@
 package vn.bosch.ecommerce.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import javax.persistence.PersistenceException;
+import javax.servlet.http.HttpServletRequest;
 
-@Controller
-public class MainController {
- 
-	@GetMapping("/login")
-    public String login(Model model, String error, String logout) {
-        if (error != null)
-            model.addAttribute("error", "Your username and password is invalid.");
+import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.common.OAuth2RefreshToken;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.WebRequest;
 
-        if (logout != null)
-            model.addAttribute("message", "You have been logged out successfully.");
+import org.apache.commons.lang3.StringUtils;
+import vn.bosch.ecommerce.config.Constants;
+import vn.bosch.ecommerce.config.EUser;
+import vn.bosch.ecommerce.io.entities.Account;
+import vn.bosch.ecommerce.service.AccountService;
 
-        return "login";
-    }
-
-    @GetMapping({"/", "/welcome"})
-    public String welcome(Model model) {
-        return "welcome";
-    }
-
+@RestController
+@RequestMapping(value = "user")
+public class UserController {
+	
+	@Autowired
+	AccountService accountService;
+	
+	
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	public ResponseEntity<String> register (
+			WebRequest request,
+			@RequestParam(name = "username") String username, 
+			@RequestParam(name = "email") String email, 
+			@RequestParam(name = "password") String password) {
+		try {
+			String contextPatch = request.getContextPath();
+			return accountService.register(contextPatch, username, email, password);
+		} 
+		catch (PersistenceException e) {
+			if (e.getCause() instanceof ConstraintViolationException) {
+				ConstraintViolationException cve = (ConstraintViolationException) e.getCause();
+				String constraintName = cve.getConstraintName();
+				if (StringUtils.equals(constraintName, Constants.KEY_UNIQUE_USERNAME)) {
+					return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(Constants.KEY_UNIQUE_USERNAME);
+				}
+				
+				if (StringUtils.equals(constraintName, Constants.KEY_UNIQUE_EMAIL)) {
+					return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(Constants.KEY_UNIQUE_EMAIL);
+				}
+				
+				if (StringUtils.equals(constraintName, Constants.KEY_UNIQUE_ID)) {
+					return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(Constants.KEY_UNIQUE_ID);
+				}
+			}
+			
+			throw e;
+		}
+		catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Constants.NOT_FOUND);
+		}
+	}
+	
+	@RequestMapping(value = "/verify", method = RequestMethod.POST)
+	public ResponseEntity<String> verifyToken (@RequestParam(name = "verificationToken") String verificationToken) {
+		return accountService.verify(verificationToken);
+	}
+	
+	@RequestMapping(value = "/profile", method = RequestMethod.GET)
+	//@PreAuthorize(value = "hasAnyRole({'user', 'admin', 'super_admin'})")
+	public Account getCurrentAccountInfo() {
+		Account account = new Account();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		EUser loggedInUser = (EUser) auth.getPrincipal();
+		account = loggedInUser.getUserInfo();
+		return account;
+	}
+	
 }

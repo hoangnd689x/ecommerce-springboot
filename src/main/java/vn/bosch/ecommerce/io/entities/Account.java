@@ -36,6 +36,9 @@ public class Account implements Serializable {
 
 	@Column(name = "modifiedDate")
 	private Date modifiedDate;
+	
+	@Column(length = 255)
+	private String verificationToken;
 
 	@OneToMany(mappedBy = "createdBy")
 	private List<Article> createArticleBy;
@@ -129,6 +132,14 @@ public class Account implements Serializable {
 	public String toString() {
 		return "User{" + "id=" + accountId + ", email='" + email + '\'' + ", password='" + "*********" + '\''
 				+ ", role=" + role + '}';
+	}
+
+	public String getVerificationToken() {
+		return verificationToken;
+	}
+
+	public void setVerificationToken(String verificationToken) {
+		this.verificationToken = verificationToken;
 	}
 
 }
