@@ -1,19 +1,12 @@
 package vn.bosch.ecommerce.controller;
 
 import javax.persistence.PersistenceException;
-import javax.servlet.http.HttpServletRequest;
-
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.common.OAuth2AccessToken;
-import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.common.OAuth2RefreshToken;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -81,6 +74,11 @@ public class UserController {
 		EUser loggedInUser = (EUser) auth.getPrincipal();
 		account = loggedInUser.getUserInfo();
 		return account;
+	}
+	
+	@RequestMapping(value = "/reset-password", method = RequestMethod.POST)
+	public ResponseEntity<String> resetPassword (@RequestParam(name = "email") String email, @RequestParam(name = "password") String password) {
+		return accountService.resetPassword(email, password); 
 	}
 	
 }

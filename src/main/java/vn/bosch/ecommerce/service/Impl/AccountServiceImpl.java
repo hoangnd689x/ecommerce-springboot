@@ -141,6 +141,28 @@ public class AccountServiceImpl implements AccountService {
 		}
 	}
 	
+	@Override
+	@Transactional
+	public ResponseEntity<String> resetPassword (String email,String password) {
+		try {
+			Account account = accountRepository.findByEmail(email);
+			
+			if (account == null) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("This email has yet been registered.");
+			}
+			else {
+				PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(16);
+				account.setPassword(passwordEncoder.encode(password));
+			}
+			
+			accountRepository.save(account);			
+			return ResponseEntity.status(HttpStatus.OK).body("Password updated successfully");
+		}
+		catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Constants.NOT_FOUND);
+		}
+	}
+	
 	public String makeRandomKey(int length) {
 		String text = "";
 		String possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

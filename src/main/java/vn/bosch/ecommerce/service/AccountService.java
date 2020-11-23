@@ -22,5 +22,7 @@ public interface AccountService {
 
 	ResponseEntity<String> verify(String verificationToken);
 
+	ResponseEntity<String> resetPassword(String email, String password);
+
 
 }
