@@ -44,7 +44,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		super.configure(web);
 		web.ignoring().antMatchers("/user/register");
 		web.ignoring().antMatchers("/user/verify");
-		web.ignoring().antMatchers("/user/logout");
 	}
 
 	@Override
@@ -53,7 +52,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.anonymous().authorities("ROLE_ANONYMOUS").and().formLogin().and().httpBasic().and().cors().and()
 				.csrf();
 	}
-
+	
+	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		PasswordEncoder encoder = new BCryptPasswordEncoder(16);

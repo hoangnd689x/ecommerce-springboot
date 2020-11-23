@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
-
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.apache.commons.lang3.StringUtils;
 import vn.bosch.ecommerce.config.Constants;
 import vn.bosch.ecommerce.config.EUser;
@@ -20,6 +20,7 @@ import vn.bosch.ecommerce.io.entities.Account;
 import vn.bosch.ecommerce.service.AccountService;
 
 @RestController
+@EnableWebMvc
 @RequestMapping(value = "user")
 public class UserController {
 	

@@ -156,7 +156,7 @@ public class AccountServiceImpl implements AccountService {
 			}
 			
 			accountRepository.save(account);			
-			return ResponseEntity.status(HttpStatus.OK).body("Password updated successfully");
+			return ResponseEntity.status(HttpStatus.OK).body("Reset successfully");
 		}
 		catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Constants.NOT_FOUND);
