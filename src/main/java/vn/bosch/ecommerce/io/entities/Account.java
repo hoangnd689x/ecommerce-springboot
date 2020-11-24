@@ -64,6 +64,12 @@ public class Account implements Serializable {
 	@OneToMany(mappedBy = "email")
 	private List<Comment> comments;
 
+	@OneToMany(mappedBy ="modifiedBy")
+	private List<ProductReview> modifiedProductReviewBy;
+
+	@OneToMany(mappedBy ="createdBy")
+	private List<ProductReview> createProductReviewBy;
+
 	public Date getCreatedDate() {
 		return this.createdDate;
 	}

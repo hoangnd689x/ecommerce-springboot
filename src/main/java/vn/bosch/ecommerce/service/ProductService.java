@@ -1,12 +1,15 @@
 package vn.bosch.ecommerce.service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.ArrayList;
 
 import vn.bosch.ecommerce.io.entities.Product;
+import vn.bosch.ecommerce.model.response.GetAllProductModel;
+import vn.bosch.ecommerce.model.response.GetProductByIdModel;
+import vn.bosch.ecommerce.model.response.GetProductReviewModel;
+import vn.bosch.ecommerce.model.response.GetProductsByViewModel;
 
 public interface ProductService {
-	List<Product> getAll();
+	ArrayList<GetAllProductModel> getAll();
 
 	void save(Product product);
 
@@ -14,6 +17,12 @@ public interface ProductService {
 	
 	void delete(Long id);
 	
-	Optional<Product> findById(Long id);
+	GetProductByIdModel getProductById(Long id);
+
+	ArrayList<GetProductsByViewModel> getProductByView(String view);
+
+	ArrayList<GetProductReviewModel> getProductReview(Long id);
+
+	ArrayList<GetAllProductModel> getTop10Product();
 
 }

@@ -45,7 +45,20 @@ public class ProductController {
 	   }
 	   
 	   @GetMapping("/{id}")
-	   public ResponseEntity<Object> get(@PathVariable("id") Long id) {
-	      return new ResponseEntity<>(productService.findById(id), HttpStatus.OK);
+	   public ResponseEntity<Object> getProductById(@PathVariable("id") Long id) {
+	      return new ResponseEntity<>(productService.getProductById(id), HttpStatus.OK);
 	   }
+	   @GetMapping("/view/{view}")
+		public ResponseEntity<Object> getProductByView(@PathVariable("view")String view){
+	   		return new ResponseEntity<>(productService.getProductByView(view), HttpStatus.OK);
+	   }
+	   @GetMapping("/review/{id}")
+	   public ResponseEntity<Object> getProductReview(@PathVariable("id")Long id) {
+		   return new ResponseEntity<>(productService.getProductReview(id), HttpStatus.OK);
+	   }
+	   @GetMapping("/top10")
+	   public ResponseEntity<Object> getTop10Product() {
+		   return new ResponseEntity<>(productService.getTop10Product(), HttpStatus.OK);
+	   }
+
 }

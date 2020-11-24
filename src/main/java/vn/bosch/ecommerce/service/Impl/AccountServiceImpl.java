@@ -6,8 +6,16 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.Set;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,10 +45,14 @@ public class AccountServiceImpl implements AccountService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	EmailService emailService;
+	
+	final String emailusername = "ecommerce.springboot@gmail.com";
+    final String emailpassword = "xbmoqwnvdcvwjvez";
+
 
 	@Override
 	public List<Account> getAll() {
-		return accountRepository.findAll();
+		return (List<Account>) accountRepository.findAll();
 	}
 
 	@Override
@@ -107,6 +119,40 @@ public class AccountServiceImpl implements AccountService {
 	        		validationLink + "\n\n" +
 	        		"Regards," + "\n" +
 	        		"Backend Team");*/
+			
+	        Properties prop = new Properties();
+	        prop.put("mail.smtp.host", "smtp.gmail.com");
+	        prop.put("mail.smtp.port", "465");
+	        prop.put("mail.smtp.auth", "true");
+	        prop.put("mail.smtp.socketFactory.port", "465");
+	        prop.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+	        
+	        Session session = Session.getInstance(prop,
+	                new javax.mail.Authenticator() {
+	                    protected PasswordAuthentication getPasswordAuthentication() {
+	                        return new PasswordAuthentication(emailusername, emailpassword);
+	                    }
+	                });
+
+	        try {
+
+	            Message message = new MimeMessage(session);
+	            message.setFrom(new InternetAddress("ecommerce.springboot@gmail.com"));
+	            message.setRecipients(
+	                    Message.RecipientType.TO,
+	                    InternetAddress.parse(email)
+	            );
+	            message.setSubject("Testing Gmail SSL");
+	            message.setText("Dear Mail Crawler,"
+	                    + "\n\n Please do not spam my email!");
+
+	            Transport.send(message);
+
+	            System.out.println("Done");
+
+	        } catch (MessagingException e) {
+	            e.printStackTrace();
+	        }
 	        System.out.println("oke line 110");
 			return ResponseEntity.status(HttpStatus.OK).body("SUCCESS");
 		} catch (Exception e) {

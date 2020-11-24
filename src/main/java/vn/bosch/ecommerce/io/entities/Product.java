@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 @Entity
 @Table(name = "products")
@@ -19,8 +21,8 @@ public class Product implements Serializable {
     private String productName;
 
 	@ManyToOne
-    @JoinColumn(name = "categoryId")
-    private Category categoryId;
+    @JoinColumn(name = "category")
+    private Category category;
 
     @Column(name = "productDescription")
     private String productDescription;
@@ -34,12 +36,16 @@ public class Product implements Serializable {
     @Column(name = "productImage")
     private String productImage;
 
-
     @Column(name = "discount")
     private Double discount;
 
 	@Column(name = "viewCount")
 	private String viewCount;
+
+	@Min(1)
+	@Max(5)
+	@Column(name = "averageRating")
+	private Double averageRating;
 
 	@Column(name = "isDeleted")
 	private boolean isDeleted;
@@ -64,15 +70,16 @@ public class Product implements Serializable {
     @OneToMany(mappedBy = "orderId")
 	private List<OrderDetail> orderDetail;
 
-	@OneToMany(mappedBy = "productId")
-	private List<Comment> comments;
+    @OneToMany(mappedBy = "productId")
+	private List<ProductReview> reviews;
 
-	public Category getCategoryId() {
-		return categoryId;
+
+	public Category getCategory() {
+		return category;
 	}
 
-	public void setCategoryId(Category categoryId) {
-		this.categoryId = categoryId;
+	public void setCategory(Category categoryId) {
+		this.category = categoryId;
 	}
 
 	public Long getProductId() {
@@ -177,5 +184,21 @@ public class Product implements Serializable {
 
 	public void setViewCount(String viewCount) {
 		this.viewCount = viewCount;
+	}
+
+	public Double getAverageRating() {
+		return averageRating;
+	}
+
+	public void setAverageRating(Double averageRating) {
+		this.averageRating = averageRating;
+	}
+
+	public List<ProductReview> getReviews() {
+		return reviews;
+	}
+
+	public void setReviews(List<ProductReview> review) {
+		this.reviews = review;
 	}
 }

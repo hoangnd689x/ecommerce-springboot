@@ -21,7 +21,4 @@ public class Constants {
 		public static final String KEY_UNIQUE_USERNAME = "username_UNIQUE";
 		public static final String KEY_UNIQUE_EMAIL = "email_UNIQUE";
 		public static final String KEY_UNIQUE_ID = "identityNumber_UNIQUE";
-		public static final String MY_EMAIL = "Dung.LeHanh@vn.bosch.com";
-		public static final String MY_PASSWORD = "Meouluclac06";
-
 }
