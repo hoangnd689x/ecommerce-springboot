@@ -1,6 +1,10 @@
 package vn.bosch.ecommerce.io.entities;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -107,9 +111,6 @@ public class Account implements Serializable {
 		this.email = email;
 	}
 
-	public String getPassword() {
-		return this.password;
-	}
 
 	public void setPassword(String password) {
 		this.password = password;
@@ -132,4 +133,7 @@ public class Account implements Serializable {
 		this.userName = userName;
 	}
 
+	public String getPassword() {
+		return password;
+	}
 }

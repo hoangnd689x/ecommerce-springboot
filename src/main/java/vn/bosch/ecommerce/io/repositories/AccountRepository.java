@@ -9,4 +9,5 @@ import vn.bosch.ecommerce.io.entities.Account;
 @Repository
 public interface AccountRepository extends CrudRepository<Account, Long> {
     Account getAccountByAccountId(Long id);
+    Account getAccountByUserName(String userName);
 }

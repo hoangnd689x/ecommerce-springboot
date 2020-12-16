@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import vn.bosch.ecommerce.io.entities.Account;
+import vn.bosch.ecommerce.model.request.RegisterRequestModel;
 import vn.bosch.ecommerce.service.AccountService;
 
 @RestController
@@ -26,9 +27,9 @@ public class AccountsController {
 	      return new ResponseEntity<>(accountService.getAll(), HttpStatus.OK);
 	   }
 	   
-	   @PostMapping
-	   public ResponseEntity<Object> save(@RequestBody Account account) {
-		  accountService.save(account);
+	   @PostMapping(value = "/register")
+	   public ResponseEntity<Object> save(@RequestBody RegisterRequestModel account) {
+		  accountService.register(account);
 	      return new ResponseEntity<>("Account is saved successfully", HttpStatus.CREATED);
 	   }
 
